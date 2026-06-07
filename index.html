@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lily Kuo — Performance Marketing Analyst</title>
+  <style>
+    :root {
+      --bg:       #fefefe;
+      --bg2:      #fdf4ff;
+      --bg3:      #fff7ed;
+      --card:     #ffffff;
+      --primary:  #7c3aed;
+      --primary-l:#ede9fe;
+      --warm:     #f97316;
+      --warm-l:   #fff7ed;
+      --green:    #059669;
+      --text:     #18181b;
+      --text2:    #71717a;
+      --border:   #e4e4e7;
+      --shadow:   0 1px 4px rgba(0,0,0,.06), 0 6px 20px rgba(124,58,237,.07);
+      --radius:   14px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:var(--bg); color:var(--text); line-height:1.7; }
+
+    /* ── LANG TOGGLE ── */
+    body:not(.zh) .zh { display:none !important; }
+    body.zh .en { display:none !important; }
+
+    /* ── NAV ── */
+    nav {
+      position:fixed; top:0; left:0; right:0; z-index:100;
+      background:rgba(254,254,254,.9); backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 6%; height:62px;
+    }
+    .nav-name { font-weight:800; font-size:.95rem; color:var(--primary); }
+    .nav-right { display:flex; align-items:center; gap:1.6rem; }
+    .nav-links { display:flex; gap:1.6rem; }
+    .nav-links a { color:var(--text2); text-decoration:none; font-size:.87rem; transition:color .2s; }
+    .nav-links a:hover { color:var(--primary); }
+    .lang-btn {
+      background:var(--primary-l); border:1.5px solid var(--primary); color:var(--primary);
+      border-radius:999px; padding:4px 14px; font-size:.8rem; font-weight:700;
+      cursor:pointer; transition:all .2s;
+    }
+    .lang-btn:hover { background:var(--primary); color:#fff; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height:100vh; padding:110px 6% 70px;
+      background:linear-gradient(135deg,#fdf4ff 0%,#fff7ed 55%,#f0f9ff 100%);
+      display:flex; align-items:center;
+    }
+    .hero-inner { max-width:820px; }
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background:#fff; border:1.5px solid var(--border);
+      border-radius:999px; padding:5px 16px;
+      font-size:.8rem; color:var(--text2); margin-bottom:1.6rem;
+      box-shadow:0 2px 8px rgba(0,0,0,.05);
+    }
+    .dot-green { width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse 2s infinite; flex-shrink:0; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.4} }
+    h1 { font-size:clamp(2.8rem,5.5vw,4.4rem); font-weight:900; line-height:1.06; margin-bottom:1.1rem; }
+    .hero-greeting { font-size:clamp(1.1rem,2vw,1.4rem); font-weight:500; color:var(--text2); display:block; margin-bottom:.25rem; }
+    .hero-name { color:var(--text); display:block; }
+    .gradient { background:linear-gradient(135deg,var(--primary),var(--warm)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-sub { font-size:1.08rem; color:var(--text2); max-width:580px; margin-bottom:2rem; }
+    .hero-stats { display:flex; gap:2.2rem; flex-wrap:wrap; margin-bottom:2.5rem; }
+    .stat-num { font-size:2rem; font-weight:900; color:var(--primary); }
+    .stat-label { font-size:.74rem; color:var(--text2); }
+    .hero-btns { display:flex; gap:.9rem; flex-wrap:wrap; margin-bottom:1.6rem; }
+    .btn {
+      display:inline-flex; align-items:center; gap:7px;
+      padding:11px 24px; border-radius:10px; font-size:.88rem;
+      font-weight:700; text-decoration:none; transition:all .2s; border:none; cursor:pointer;
+    }
+    .btn-primary { background:var(--primary); color:#fff; }
+    .btn-primary:hover { background:#6d28d9; transform:translateY(-1px); box-shadow:0 6px 20px rgba(124,58,237,.3); }
+    .btn-email { background:var(--warm); color:#fff; }
+    .btn-email:hover { background:#ea6c00; transform:translateY(-1px); box-shadow:0 6px 20px rgba(249,115,22,.3); }
+    .contact-row { display:flex; gap:1.4rem; flex-wrap:wrap; }
+    .contact-row a { color:var(--text2); font-size:.84rem; text-decoration:none; transition:color .2s; }
+    .contact-row a:hover { color:var(--primary); }
+    .hero-tagline { font-size:1.22rem; font-weight:800; color:var(--text); margin-bottom:.55rem; line-height:1.4; }
+    .hero-looking { display:flex; align-items:center; gap:.55rem; flex-wrap:wrap; margin-top:1.4rem; }
+    .hero-looking-label { font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--text2); margin-right:.2rem; }
+    .hero-looking-tag { background:#fff; border:1.5px solid var(--primary); color:var(--primary); border-radius:999px; padding:3px 13px; font-size:.78rem; font-weight:700; }
+
+    /* ── CLIENTS STRIP (right after hero) ── */
+    .clients-strip {
+      background:#fff; border-top:1px solid var(--border); border-bottom:1px solid var(--border);
+      padding:40px 6%;
+    }
+    .clients-strip-inner { max-width:960px; margin:0 auto; }
+    .clients-label { font-size:.72rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--warm); margin-bottom:.5rem; }
+    .clients-title { font-size:1.1rem; font-weight:800; margin-bottom:1.4rem; }
+    .clients-grid { display:flex; gap:1rem; flex-wrap:wrap; }
+    .client-chip {
+      display:flex; align-items:center; gap:.65rem;
+      background:var(--bg2); border:1.5px solid var(--border);
+      border-radius:12px; padding:.7rem 1.3rem;
+      transition:all .2s; cursor:default;
+    }
+    .client-chip:hover { border-color:var(--primary); transform:translateY(-2px); box-shadow:0 8px 20px rgba(124,58,237,.1); }
+    .client-icon { font-size:1.4rem; }
+    .client-name { font-weight:800; font-size:.92rem; }
+    .client-sub { font-size:.71rem; color:var(--text2); }
+
+    /* ── SECTION ── */
+    .section { padding:72px 6%; max-width:960px; margin:0 auto; }
+    .section-label { font-size:.72rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:var(--warm); margin-bottom:.4rem; }
+    h2 { font-size:1.85rem; font-weight:900; margin-bottom:2.4rem; }
+    .bg-alt { background:linear-gradient(135deg,#fdf4ff,#fff7ed); }
+
+    /* ── TIMELINE ── */
+    .timeline { display:flex; flex-direction:column; }
+    .tl-item { border-left:3px solid var(--primary-l); padding-left:1.7rem; padding-bottom:2.6rem; position:relative; }
+    .tl-item:last-child { padding-bottom:0; }
+    .tl-dot { position:absolute; left:-8px; top:6px; width:14px; height:14px; border-radius:50%; background:var(--primary); border:3px solid var(--bg); box-shadow:0 0 0 2px var(--primary-l); }
+    .tl-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:.4rem; margin-bottom:.25rem; }
+    .tl-role { font-size:1.04rem; font-weight:800; }
+    .tl-date { font-size:.77rem; background:var(--primary-l); color:var(--primary); padding:3px 12px; border-radius:999px; font-weight:600; white-space:nowrap; }
+    .tl-company { font-size:.85rem; color:var(--warm); font-weight:700; margin-bottom:.85rem; }
+    .tl-bullets { list-style:none; display:flex; flex-direction:column; gap:.5rem; }
+    .tl-bullets li { font-size:.88rem; color:var(--text2); padding-left:1.2rem; position:relative; }
+    .tl-bullets li::before { content:"→"; position:absolute; left:0; color:var(--primary); top:1px; }
+    .tl-bullets strong { color:var(--text); }
+
+    /* ── PROJECTS ── */
+    .proj-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:1.2rem; }
+    .proj-card { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.5rem; box-shadow:var(--shadow); transition:all .25s; }
+    .proj-card:hover { border-color:var(--primary); transform:translateY(-3px); box-shadow:0 12px 32px rgba(124,58,237,.12); }
+    .proj-type { font-size:.7rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--primary); margin-bottom:.6rem; }
+    .proj-title { font-size:.97rem; font-weight:800; margin-bottom:.5rem; }
+    .proj-desc { font-size:.85rem; color:var(--text2); }
+    .proj-highlight { color:var(--text); font-weight:700; }
+
+    /* ── EDUCATION ── */
+    .edu-grid { display:flex; flex-direction:column; gap:1.1rem; }
+    .edu-card { background:var(--card); border:1.5px solid var(--border); border-radius:var(--radius); padding:1.4rem 1.7rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:.7rem; box-shadow:var(--shadow); }
+    .edu-school { font-size:1rem; font-weight:800; margin-bottom:.25rem; }
+    .edu-degree { font-size:.84rem; color:var(--text2); }
+    .edu-gpa { font-size:1.1rem; font-weight:900; color:var(--primary); }
+
+    /* ── SKILLS ── */
+    .skills-grid { display:flex; flex-direction:column; gap:1.6rem; }
+    .skill-cat { font-size:.72rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--primary); margin-bottom:.6rem; }
+    .tags { display:flex; flex-wrap:wrap; gap:.5rem; }
+    .tag { background:var(--primary-l); color:var(--primary); border-radius:8px; padding:4px 13px; font-size:.82rem; font-weight:600; transition:all .15s; }
+    .tag:hover { background:var(--primary); color:#fff; }
+    .tag.warm { background:var(--warm-l); color:var(--warm); }
+    .tag.warm:hover { background:var(--warm); color:#fff; }
+
+    /* ── CONTACT ── */
+    .contact-section { background:linear-gradient(135deg,var(--primary),#a855f7); padding:64px 6%; text-align:center; color:#fff; }
+    .contact-section h2 { color:#fff; margin-bottom:.6rem; }
+    .contact-section p { opacity:.85; margin-bottom:2rem; font-size:1rem; }
+    .contact-cards { display:flex; justify-content:center; gap:1.2rem; flex-wrap:wrap; }
+    .contact-card {
+      background:rgba(255,255,255,.15); backdrop-filter:blur(8px);
+      border:1.5px solid rgba(255,255,255,.25); border-radius:var(--radius);
+      padding:1.2rem 2rem; color:#fff; text-decoration:none;
+      transition:all .2s; font-weight:600; font-size:.9rem;
+      display:flex; align-items:center; gap:.6rem;
+    }
+    .contact-card:hover { background:rgba(255,255,255,.25); transform:translateY(-2px); }
+
+    /* ── FOOTER ── */
+    footer { background:#18181b; color:#71717a; text-align:center; padding:2rem 6%; font-size:.8rem; }
+    footer a { color:#a1a1aa; text-decoration:none; }
+    footer a:hover { color:var(--warm); }
+
+    @media(max-width:640px) { .nav-links{display:none;} h1{font-size:2.5rem;} .hero-stats{gap:1.2rem;} }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-name">Lily Kuo</span>
+  <div class="nav-right">
+    <div class="nav-links">
+      <a href="#clients"><span class="en">Clients</span><span class="zh">合作客戶</span></a>
+      <a href="#experience"><span class="en">Experience</span><span class="zh">工作經驗</span></a>
+      <a href="#projects"><span class="en">Projects</span><span class="zh">專案</span></a>
+      <a href="#education"><span class="en">Education</span><span class="zh">學歷</span></a>
+      <a href="#skills"><span class="en">Skills</span><span class="zh">技能</span></a>
+    </div>
+    <button class="lang-btn" onclick="toggleLang()">中 / EN</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div style="display:flex;gap:.7rem;flex-wrap:wrap;margin-bottom:1.6rem;">
+      <div class="hero-badge" style="margin-bottom:0;">
+        <span class="dot-green"></span>
+        <span class="en">Open to new opportunities</span>
+        <span class="zh">歡迎新機會洽談</span>
+      </div>
+      <div class="hero-badge" style="margin-bottom:0;">
+        <span>💼</span>
+        <span class="en">2 yrs experience</span>
+        <span class="zh">2 年工作經驗</span>
+      </div>
+      <div class="hero-badge" style="margin-bottom:0;">
+        <span>📍</span>
+        <span class="en">Taipei · Open to remote / relocation</span>
+        <span class="zh">台北 · 可遠端 / 海外工作</span>
+      </div>
+    </div>
+
+    <h1>
+      <span class="en"><span class="hero-greeting">Hi, I'm</span><span class="hero-name">Lily Kuo</span></span>
+      <span class="zh"><span class="hero-greeting">嗨，我是</span><span class="hero-name">郭芷伶 Lily Kuo</span></span>
+    </h1>
+
+    <p class="hero-tagline en">I grow app revenue with data — €2.73M+ managed across 5 EMEA markets.</p>
+    <p class="hero-tagline zh">用數據驅動 App 成長 — 管理超過 €2.73M 廣告預算，橫跨 5 個 EMEA 市場。</p>
+    <p class="hero-sub">
+      <span class="en">Performance Marketing · Programmatic DSP/RTB · MMP Attribution · Growth Analytics</span>
+      <span class="zh">成效行銷 · 程序化廣告 DSP/RTB · MMP 歸因分析 · 成長數據</span>
+    </p>
+
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num">€2.73M</div><div class="stat-label en">Ad spend · 5 EMEA markets</div><div class="stat-label zh">廣告規模 · 5 個市場</div></div>
+      <div class="stat"><div class="stat-num">300%</div><div class="stat-label en">Spend scale growth</div><div class="stat-label zh">投放量成長</div></div>
+      <div class="stat"><div class="stat-num">54%</div><div class="stat-label en">Purchase rate lift</div><div class="stat-label zh">購買率提升</div></div>
+      <div class="stat"><div class="stat-num">3×</div><div class="stat-label en">CPI improvement</div><div class="stat-label zh">CPI 優化</div></div>
+    </div>
+
+    <div class="hero-btns">
+      <a class="btn btn-primary" href="https://www.linkedin.com/in/kuochihling" target="_blank">LinkedIn ↗</a>
+      <a class="btn btn-email" href="mailto:lily85428200@gmail.com">✉ lily85428200@gmail.com</a>
+    </div>
+
+    <div class="contact-row">
+      <a href="tel:+886989316523">📞 +886 989 316 523</a>
+    </div>
+
+    <div class="hero-looking">
+      <span class="hero-looking-label en">Looking for</span>
+      <span class="hero-looking-label zh">求職方向</span>
+      <span class="hero-looking-tag">Performance Marketing</span>
+      <span class="hero-looking-tag">Programmatic / DSP</span>
+      <span class="hero-looking-tag">Marketing Analytics</span>
+      <span class="hero-looking-tag en">APAC · EMEA</span>
+      <span class="hero-looking-tag zh">APAC · EMEA</span>
+    </div>
+  </div>
+</div>
+
+<!-- CLIENTS (prominent, right after hero) -->
+<div class="clients-strip" id="clients">
+  <div class="clients-strip-inner">
+    <div class="clients-title">
+      <span class="en">Clients</span>
+      <span class="zh">合作客戶</span>
+    </div>
+    <p style="color:var(--text2);font-size:.88rem;margin-bottom:1.4rem;">
+      <span class="en">Managed programmatic RTB campaigns across travel, food delivery, health, and sustainability verticals.</span>
+      <span class="zh">負責旅遊、外送、健康、永續等垂直市場的程序化廣告（RTB）投放。</span>
+    </p>
+    <div class="clients-grid">
+      <div class="client-chip">
+        <span class="client-icon">✈️</span>
+        <div><div class="client-name">Omio</div><div class="client-sub en">Travel · Europe</div><div class="client-sub zh">旅遊 · 歐洲</div></div>
+      </div>
+      <div class="client-chip">
+        <span class="client-icon">🔭</span>
+        <div><div class="client-name">Skyscanner</div><div class="client-sub en">Flight Search · Global</div><div class="client-sub zh">機票搜尋 · 全球</div></div>
+      </div>
+      <div class="client-chip">
+        <span class="client-icon">🥗</span>
+        <div><div class="client-name">Yazio</div><div class="client-sub en">Health & Nutrition · Europe</div><div class="client-sub zh">健康飲食 · 歐洲</div></div>
+      </div>
+      <div class="client-chip">
+        <span class="client-icon">🛵</span>
+        <div><div class="client-name">Wolt</div><div class="client-sub en">Food Delivery · Europe</div><div class="client-sub zh">外送服務 · 歐洲</div></div>
+      </div>
+      <div class="client-chip">
+        <span class="client-icon">🌱</span>
+        <div><div class="client-name">Too Good To Go</div><div class="client-sub en">Sustainability · Europe</div><div class="client-sub zh">食物永續 · 歐洲</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div style="background:var(--bg);">
+  <div class="section" id="experience">
+    <div class="section-label en">Career</div>
+    <div class="section-label zh">職涯歷程</div>
+    <h2><span class="en">Professional Experience</span><span class="zh">工作經驗</span></h2>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-header">
+          <span class="tl-role">Campaign Analyst</span>
+          <span class="tl-date en">Oct 2024 – Present</span>
+          <span class="tl-date zh">2024/10 – 至今</span>
+        </div>
+        <div class="tl-company en">Appier · Taipei, Taiwan</div>
+        <div class="tl-company zh">Appier 沛星互動科技 · 台北市，台灣</div>
+        <ul class="tl-bullets en">
+          <li>Drove full-funnel programmatic operations via DSP across EMEA markets (gaming, travel, consumer services), contributing to annual spend growth from <strong>€2.1M to €2.73M</strong>.</li>
+          <li>Restructured DSP campaign targeting and bidding strategy; increased <strong>purchase rate by 54%</strong> (2.0% vs. site avg. 1.3%) and <strong>7-day retention by 6.8%</strong> (2.03% vs. 1.9%).</li>
+          <li>Partnered with Product Managers and Data Scientists to design incrementality tests including <strong>geo lift analysis</strong>; leveraged <strong>MMP (AppsFlyer)</strong> data to validate attribution logic and support client conversations.</li>
+          <li>Worked cross-functionally with EMEA sales teams across 5–6 key markets, driving <strong>300% spend scale growth</strong>, <strong>3× CPI improvement</strong>, and expanding market share from <strong>10% to 15%</strong>.</li>
+          <li>Served as <strong>AI Ambassador</strong> (EMEA region); led adoption of AI tools into campaign optimization workflows, achieving <strong>80%+ tool adoption rate</strong>.</li>
+        </ul>
+        <ul class="tl-bullets zh">
+          <li>主導 EMEA 市場（遊戲、旅遊、消費服務類）DSP / RTB 程序化廣告投放執行，推動年度投放規模從 <strong>€2.1M 成長至 €2.73M</strong>。</li>
+          <li>針對 AppsFlyer（MMP）P360 標記的廣告活動進行問題排查與優化，成功將每日預算從 USD 150 提升至 USD 350（<strong>+133%</strong>），達成客戶預期投放規模。</li>
+          <li>重整廣告活動定向與競價策略，購買率提升 <strong>54%</strong>（達 2.0%，全站均 1.3%）、7 日留存率提升 <strong>6.8%</strong>（達 2.03%），有效提升用戶質量。</li>
+          <li>與產品經理及資料科學家合作設計並執行增量測試，包含 <strong>Geo Lift 分析</strong>，支持數據驅動的客戶策略溝通。</li>
+          <li>與 EMEA 業務跨 5–6 個主要市場合作，推動 CPI 提升 <strong>3 倍</strong>、投放量級成長 <strong>300%</strong>，市場佔有率由 <strong>10% 提升至 15%</strong>。</li>
+          <li>擔任 AI Ambassador（EMEA 區域），協助分析師將 AI 工具導入廣告優化流程，工具導入率超過 <strong>80%</strong>。</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-header">
+          <span class="tl-role en">Analyst, Digital Advertising</span>
+          <span class="tl-role zh">數位廣告管理師</span>
+          <span class="tl-date en">Aug 2021 – Mar 2023</span>
+          <span class="tl-date zh">2021/08 – 2023/03</span>
+        </div>
+        <div class="tl-company en">Hsin Hsin Galaxy Co. · Taipei, Taiwan</div>
+        <div class="tl-company zh">欣新網股份有限公司 · 台北市，台灣</div>
+        <ul class="tl-bullets en">
+          <li>Drove <strong>35% annual revenue growth</strong> by analyzing end-to-end customer touchpoints and redesigning advertising strategies; expanded into a new media channel, improving <strong>ROAS by 12%</strong>.</li>
+          <li>Built an automated BigQuery pipeline aggregating category-level advertising data, enabling junior analysts to extract insights across <strong>30 ad categories</strong> from a single spreadsheet.</li>
+          <li>Automated Google Sheets formulas and pivot dashboards in collaboration with senior specialists, saving <strong>22 man-hours/month (~50% workload reduction)</strong> for a cross-functional team of 20.</li>
+        </ul>
+        <ul class="tl-bullets zh">
+          <li>分析端到端客戶接觸點，重新設計廣告策略，推動年度營收成長 <strong>35%</strong>；開拓新廣告媒體渠道，提升 ROAS <strong>12%</strong>。</li>
+          <li>針對三種客戶層級（全球品牌、中大型賣家、中小企業）提供客製化成效報告，協助客戶做出數據驅動的廣告決策。</li>
+          <li>使用 BigQuery 建立自動化廣告數據彙整流程，讓分析師能從單一試算表快速提取 <strong>30 個廣告類別</strong>的趨勢洞察。</li>
+          <li>與工程團隊合作自動化 Google Sheets 公式及數據透視圖表，每月節省約 <strong>22 人時（工作量減少約 50%）</strong>。</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div class="bg-alt">
+  <div class="section" id="projects">
+    <div class="section-label en">Work</div>
+    <div class="section-label zh">專案經驗</div>
+    <h2><span class="en">Projects</span><span class="zh">專案</span></h2>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-type">Machine Learning · Python</div>
+        <div class="proj-title en">Graduation Rate Prediction Model</div>
+        <div class="proj-title zh">機器學習預測大學畢業率</div>
+        <div class="proj-desc en">Applied multiple ML models (incl. LSTM) on large-scale education datasets; achieved <span class="proj-highlight">95% model accuracy</span> predicting undergraduate graduation trends in Python.</div>
+        <div class="proj-desc zh">使用 Python 處理大規模教育數據集，採用 LSTM 模型進行時間序列預測，模型準確率達 <span class="proj-highlight">95%</span>，識別關鍵影響因子以支持改善策略。</div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-type">NLP · BERT</div>
+        <div class="proj-title en">Sentiment Analysis — Arizona Hotels</div>
+        <div class="proj-title zh">NLP 輿情分析—亞利桑那州飯店業</div>
+        <div class="proj-desc en">Applied BERT to classify consumer review sentiment; translated findings into actionable business recommendations for stakeholders.</div>
+        <div class="proj-desc zh">使用 BERT 語言模型分析消費者對亞利桑那州飯店業的評價，進行情感分類，整合結果提供具體商業建議。</div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-type en">Marketing · Social Media</div>
+        <div class="proj-type zh">行銷 · 社群媒體</div>
+        <div class="proj-title en">Concert Fan Support Campaign</div>
+        <div class="proj-title zh">演唱會粉絲應援計劃</div>
+        <div class="proj-desc en">Designed and executed a social media marketing strategy, raising <span class="proj-highlight">NTD 90,000 (~$3,200)</span> via crowdfunding; fan video content generated <span class="proj-highlight">20,000+ views</span> and 515 shares across social platforms.</div>
+        <div class="proj-desc zh">規劃並執行社群媒體行銷策略，透過群眾募資籌集新台幣 <span class="proj-highlight">90,000 元</span>用於粉絲應援項目；應援影片獲得 <span class="proj-highlight">20,000+</span> 次觀看及 515 次分享。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<div style="background:var(--bg);">
+  <div class="section" id="education">
+    <div class="section-label en">Academic</div>
+    <div class="section-label zh">學歷</div>
+    <h2><span class="en">Education</span><span class="zh">教育背景</span></h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div>
+          <div class="edu-school en">W. P. Carey School of Business, Arizona State University</div>
+          <div class="edu-school zh">亞利桑那州立大學 W. P. Carey 商學院</div>
+          <div class="edu-degree en">M.S. Business Analytics (MBAn) · Aug 2023 – May 2024 · Tempe, AZ</div>
+          <div class="edu-degree zh">商業分析碩士（MBAn）· 2023/08 – 2024/05 · 美國亞利桑那州</div>
+        </div>
+        <div class="edu-gpa">GPA 3.67</div>
+      </div>
+      <div class="edu-card">
+        <div>
+          <div class="edu-school en">Fu Jen Catholic University</div>
+          <div class="edu-school zh">天主教輔仁大學</div>
+          <div class="edu-degree en">B.F.A. Communication Arts · Sep 2017 – Jun 2021 · Taipei, Taiwan</div>
+          <div class="edu-degree zh">影像傳播學系學士 · 2017/09 – 2021/06 · 台灣新北市</div>
+        </div>
+        <div class="edu-gpa">GPA 3.74</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<div class="bg-alt">
+  <div class="section" id="skills">
+    <div class="section-label en">Toolkit</div>
+    <div class="section-label zh">技能</div>
+    <h2><span class="en">Skills & Certifications</span><span class="zh">技能與證照</span></h2>
+    <div class="skills-grid">
+      <div>
+        <div class="skill-cat en">Domain Expertise</div>
+        <div class="skill-cat zh">專業領域</div>
+        <div class="tags">
+          <span class="tag warm">Programmatic RTB</span><span class="tag warm">DSP</span><span class="tag warm">MMP</span>
+          <span class="tag warm">Attribution Analysis</span><span class="tag warm">Incrementality Testing</span>
+          <span class="tag warm">Geo Lift</span><span class="tag warm">Performance Marketing</span>
+          <span class="tag warm">App Measurement</span><span class="tag warm">User Quality Analysis</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat en">Technical Tools</div>
+        <div class="skill-cat zh">技術工具</div>
+        <div class="tags">
+          <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">BigQuery</span>
+          <span class="tag">Looker Studio</span><span class="tag">Tableau</span><span class="tag">Power BI</span>
+          <span class="tag">Google Ads</span><span class="tag">Excel</span><span class="tag">Google Sheets</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat en">AI & Automation</div>
+        <div class="skill-cat zh">AI 與自動化</div>
+        <div class="tags">
+          <span class="tag en">Workflow Optimization</span><span class="tag zh">工作流程優化</span>
+          <span class="tag en">AI Tool Adoption</span><span class="tag zh">AI 工具導入</span>
+          <span class="tag en">Efficiency Improvement</span><span class="tag zh">效率提升</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat en">Certifications</div>
+        <div class="skill-cat zh">Google 認證</div>
+        <div class="tags">
+          <span class="tag">Google Ads Agency Certification (2024)</span>
+          <span class="tag">Google Ads Display Professional (2024)</span>
+          <span class="tag">Google Ads Video Professional (2024)</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat en">Languages</div>
+        <div class="skill-cat zh">語言</div>
+        <div class="tags">
+          <span class="tag en">Mandarin Chinese — Native</span><span class="tag zh">中文 — 母語</span>
+          <span class="tag en">English — Fluent</span><span class="tag zh">英文 — 流利</span>
+          <span class="tag en">Korean — Basic</span><span class="tag zh">韓文 — 基礎</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT SECTION -->
+<div class="contact-section">
+  <h2><span class="en">Let's Connect</span><span class="zh">歡迎聯絡</span></h2>
+  <div class="contact-cards">
+    <a class="contact-card" href="mailto:lily85428200@gmail.com">✉️ lily85428200@gmail.com</a>
+    <a class="contact-card" href="https://www.linkedin.com/in/kuochihling" target="_blank">💼 LinkedIn ↗</a>
+    <a class="contact-card" href="tel:+886989316523">📞 +886 989 316 523</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Chih-Ling Kuo (Lily) · Performance Marketing Analyst · Taipei, Taiwan</p>
+</footer>
+
+<script>
+  function toggleLang() {
+    document.body.classList.toggle('zh');
+    document.documentElement.lang = document.body.classList.contains('zh') ? 'zh' : 'en';
+  }
+</script>
+</body>
+</html>
